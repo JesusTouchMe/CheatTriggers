@@ -1,0 +1,16 @@
+[
+{
+  "modid": "cheattriggers",
+  "name": "Cheat Triggers",
+  "description": "four big guys shaking their bootycheeks",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["JesusTOCuhemE"],
+  "credits": "my parents (they created me)",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

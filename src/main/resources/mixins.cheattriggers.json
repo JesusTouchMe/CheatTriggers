@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "cum.jesus.cheattriggers.injection.mixins",
+  "refmap": "mixins.jesusclient.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "net.minecraft.client.MixinMinecraft"
+  ]
+}
