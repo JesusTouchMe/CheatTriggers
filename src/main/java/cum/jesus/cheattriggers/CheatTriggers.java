@@ -3,6 +3,7 @@ package cum.jesus.cheattriggers;
 import cum.jesus.cheattriggers.command.CommandManager;
 import cum.jesus.cheattriggers.internal.ConfigManager;
 import cum.jesus.cheattriggers.internal.FileManager;
+import cum.jesus.cheattriggers.internal.InternalCommandManager;
 import cum.jesus.cheattriggers.utils.Logger;
 import net.minecraft.client.Minecraft;
 
@@ -44,6 +45,8 @@ public class CheatTriggers {
 
     public static void load() {
         Logger.debug("loading");
+
+        InternalCommandManager.addAll();
 
         isLoaded = true;
     }

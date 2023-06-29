@@ -6,6 +6,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+/**
+ * different class for mod class to be cleaner
+ */
 @Mod(modid=CheatTriggers.MODID, name=CheatTriggers.NAME, version = CheatTriggers.VERSION)
 public final class ModMain {
     public static boolean devMode = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || ClientUser.username.equals("JesusTouchMe");
