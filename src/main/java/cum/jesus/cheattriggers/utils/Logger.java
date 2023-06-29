@@ -47,7 +47,7 @@ public final class Logger {
         }
     }
 
-    public static void log(Object... objects) {
+    public static void info(Object... objects) {
         log(LogLevel.INFO, objects);
     }
 

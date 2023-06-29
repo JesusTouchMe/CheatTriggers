@@ -4,6 +4,7 @@ import cum.jesus.cheattriggers.command.CommandManager;
 import cum.jesus.cheattriggers.internal.ConfigManager;
 import cum.jesus.cheattriggers.internal.FileManager;
 import cum.jesus.cheattriggers.internal.InternalCommandManager;
+import cum.jesus.cheattriggers.scripting.ScriptManager;
 import cum.jesus.cheattriggers.utils.Logger;
 import net.minecraft.client.Minecraft;
 
@@ -19,6 +20,7 @@ public class CheatTriggers {
     private static FileManager fileManager;
     private static ConfigManager configManager;
     private static CommandManager commandManager;
+    private static ScriptManager scriptManager;
 
     //<editor-fold desc="Getters">
     public static FileManager getFileManager() {
@@ -33,6 +35,10 @@ public class CheatTriggers {
         return commandManager;
     }
 
+    public static ScriptManager getScriptManager() {
+        return scriptManager;
+    }
+
     //</editor-fold>
 
     public static void preLoad() {
@@ -41,12 +47,14 @@ public class CheatTriggers {
         fileManager = new FileManager();
         configManager = new ConfigManager();
         commandManager = new CommandManager();
+        scriptManager = new ScriptManager();
     }
 
     public static void load() {
         Logger.debug("loading");
 
         InternalCommandManager.addAll();
+        fileManager.loadScripts();
 
         isLoaded = true;
     }

@@ -9,6 +9,8 @@ public class FileManager {
     // directories
     public final File rootDir;
     public final File tmpDir;
+    public final File scriptsDir;
+    public final File scriptDataDir;
 
     // files
     public final File configFile;
@@ -17,12 +19,16 @@ public class FileManager {
         // dirs
         rootDir = new File(CheatTriggers.mc.mcDataDir, CheatTriggers.NAME.replace(" ", ""));
         tmpDir = new File(rootDir, "tmp");
+        scriptsDir = new File(rootDir, "scripts");
+        scriptDataDir = new File(rootDir, "data");
 
         // files
         configFile = new File(rootDir, "config.json");
 
         if (!rootDir.exists()) rootDir.mkdirs();
         if (!tmpDir.exists()) tmpDir.mkdirs();
+        if (!scriptsDir.exists()) scriptsDir.mkdirs();
+        if (!scriptDataDir.exists()) scriptDataDir.mkdirs();
 
         File[] tmpList = tmpDir.listFiles();
         if (tmpList != null) {
@@ -36,5 +42,22 @@ public class FileManager {
         File tmpFile = new File(tmpDir, name);
         tmpFile.deleteOnExit();
         return tmpFile.createNewFile();
+    }
+
+    public void loadScripts() {
+        File[] zipFiles = scriptsDir.listFiles(pathname -> pathname.getName().endsWith("zip") || pathname.getName().endsWith("cbs"));
+        File[] dirs = scriptsDir.listFiles(File::isDirectory);
+
+        if (zipFiles != null) {
+            for (File file : zipFiles) {
+                CheatTriggers.getScriptManager().load(file, true);
+            }
+        }
+
+        if (dirs != null) {
+            for (File file : dirs) {
+                CheatTriggers.getScriptManager().load(file, false);
+            }
+        }
     }
 }
