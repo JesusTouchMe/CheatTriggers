@@ -1,5 +1,6 @@
 package cum.jesus.cheattriggers;
 
+import com.google.gson.Gson;
 import cum.jesus.cheattriggers.command.CommandManager;
 import cum.jesus.cheattriggers.internal.ConfigManager;
 import cum.jesus.cheattriggers.internal.FileManager;
@@ -16,6 +17,7 @@ public class CheatTriggers {
     public static boolean isLoaded = false;
 
     public static Minecraft mc = Minecraft.getMinecraft();
+    public static Gson gson = new Gson();
 
     private static FileManager fileManager;
     private static ConfigManager configManager;
@@ -54,7 +56,9 @@ public class CheatTriggers {
         Logger.debug("loading");
 
         InternalCommandManager.addAll();
-        fileManager.loadScripts();
+
+        scriptManager.setup();
+        scriptManager.entryPass();
 
         isLoaded = true;
     }

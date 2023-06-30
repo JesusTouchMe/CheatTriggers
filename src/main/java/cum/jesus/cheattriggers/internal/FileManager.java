@@ -43,21 +43,4 @@ public class FileManager {
         tmpFile.deleteOnExit();
         return tmpFile.createNewFile();
     }
-
-    public void loadScripts() {
-        File[] zipFiles = scriptsDir.listFiles(pathname -> pathname.getName().endsWith("zip") || pathname.getName().endsWith("cbs"));
-        File[] dirs = scriptsDir.listFiles(File::isDirectory);
-
-        if (zipFiles != null) {
-            for (File file : zipFiles) {
-                CheatTriggers.getScriptManager().load(file, true);
-            }
-        }
-
-        if (dirs != null) {
-            for (File file : dirs) {
-                CheatTriggers.getScriptManager().load(file, false);
-            }
-        }
-    }
 }

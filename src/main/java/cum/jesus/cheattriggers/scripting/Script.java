@@ -1,24 +1,21 @@
 package cum.jesus.cheattriggers.scripting;
 
-import cum.jesus.cheattriggers.CheatTriggers;
-import cum.jesus.cheattriggers.command.Command;
+import java.io.File;
 
 public class Script {
-    private final Metadata metadata;
+    private final ScriptMetadata metadata;
+    private final File file;
 
-    public Script(Metadata metadata) {
+    public Script(ScriptMetadata metadata, File file) {
         this.metadata = metadata;
+        this.file = file;
     }
 
-    public Metadata getMetadata() {
+    public ScriptMetadata getMetadata() {
         return metadata;
     }
 
-    public void register() {
-        for (Command cmd : metadata.commands) {
-            cmd.setDescription("(" + metadata.name + ") ");
-
-            CheatTriggers.getCommandManager().addCommand(cmd);
-        }
+    public File getFile() {
+        return file;
     }
 }

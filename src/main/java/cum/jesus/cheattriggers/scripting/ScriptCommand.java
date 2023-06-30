@@ -2,13 +2,13 @@ package cum.jesus.cheattriggers.scripting;
 
 import cum.jesus.cheattriggers.command.Command;
 import cum.jesus.cheattriggers.command.CommandException;
-
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
 
 public class ScriptCommand extends Command {
-    private ScriptEngine engine;
+    private Context context;
+    private Scriptable scope;
 
     public ScriptCommand(String name, String... aliases) {
         super(name, aliases);
@@ -16,15 +16,22 @@ public class ScriptCommand extends Command {
 
     @Override
     public void run(String alias, String[] args) throws CommandException {
-        try {
-            ((Invocable)engine).invokeFunction("run", alias, args);
-        } catch (NoSuchMethodException ignored) {
-        } catch (ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        ScriptableObject.callMethod(scope, "run", new Object[] {alias, args});
     }
 
-    public void setEngine(ScriptEngine engine) {
-        this.engine = engine;
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Scriptable getScope() {
+        return scope;
+    }
+
+    public void setScope(Scriptable scope) {
+        this.scope = scope;
     }
 }
