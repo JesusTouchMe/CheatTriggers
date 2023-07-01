@@ -55,4 +55,8 @@ public class CommandManager {
 
         return false;
     }
+
+    public void clearCommands() {
+        commands.clear();
+    }
 }

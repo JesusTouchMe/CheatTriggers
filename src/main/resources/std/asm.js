@@ -1,3 +1,5 @@
+// stolen from chattriggers
+
 let global = this;
 
 global.Java = {

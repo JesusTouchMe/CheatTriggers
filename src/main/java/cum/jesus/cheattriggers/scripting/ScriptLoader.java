@@ -1,8 +1,7 @@
 package cum.jesus.cheattriggers.scripting;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ImporterTopLevel;
-import org.mozilla.javascript.Scriptable;
+import cum.jesus.cheattriggers.utils.Logger;
+import org.mozilla.javascript.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,6 +49,17 @@ public class ScriptLoader {
         });
     }
 
+    public static void clean() {
+        try {
+            Context.exit();
+            scriptContext = null;
+            evalContext = null;
+            scope = null;
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void indexSetup() {
         wrapInContext(() -> {
             File stdLibFile = new File(ScriptLoader.class.getClassLoader().getResource("std/javascriptstd.js").toURI());
@@ -69,7 +79,7 @@ public class ScriptLoader {
         wrapInContext(() -> {
             try {
                 boolean isZipped = !file.isDirectory();
-                String indexCode = null;
+                String indexCode;
 
                 if (isZipped) {
                     ZipFile zipFile = new ZipFile(file);
@@ -84,7 +94,9 @@ public class ScriptLoader {
                     indexCode = new String(Files.readAllBytes(index.toPath()));
                 }
 
-                eval(indexCode);
+                scope.put("script", scope, script);
+
+                scriptContext.evaluateString(scope, indexCode, script.getMetadata().index, 1, null);
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -119,6 +131,13 @@ public class ScriptLoader {
     public static String eval(String code) {
         return wrapInContext(evalContext, () -> {
             return Context.toString(evalContext.evaluateString(scope, code, "<eval>", 1, null));
+        });
+    }
+
+    public static void callFunction(Function func, Object... args) {
+        wrapInContext(evalContext, () -> {
+            func.call(evalContext, scope, scope, args);
+            return null;
         });
     }
 }

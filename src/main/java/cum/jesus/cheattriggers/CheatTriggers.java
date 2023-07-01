@@ -8,16 +8,18 @@ import cum.jesus.cheattriggers.internal.InternalCommandManager;
 import cum.jesus.cheattriggers.scripting.ScriptManager;
 import cum.jesus.cheattriggers.utils.Logger;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.Packet;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class CheatTriggers {
+public final class CheatTriggers {
     public static final String MODID = "cheattriggers";
     public static final String NAME = "CheatTriggers";
     public static final String VERSION = "1.0";
 
-    public static boolean isLoaded = false;
+    private static boolean loaded = false;
 
-    public static Minecraft mc = Minecraft.getMinecraft();
-    public static Gson gson = new Gson();
+    public static final Minecraft mc = Minecraft.getMinecraft();
+    public static final Gson gson = new Gson();
 
     private static FileManager fileManager;
     private static ConfigManager configManager;
@@ -25,26 +27,29 @@ public class CheatTriggers {
     private static ScriptManager scriptManager;
 
     //<editor-fold desc="Getters">
-    public static FileManager getFileManager() {
+    public static final boolean isLoaded() {
+        return loaded;
+    }
+
+    public static final FileManager getFileManager() {
         return fileManager;
     }
 
-    public static ConfigManager getConfigManager() {
+    public static final ConfigManager getConfigManager() {
         return configManager;
     }
 
-    public static CommandManager getCommandManager() {
+    public static final CommandManager getCommandManager() {
         return commandManager;
     }
 
-    public static ScriptManager getScriptManager() {
+    public static final ScriptManager getScriptManager() {
         return scriptManager;
     }
-
     //</editor-fold>
 
     public static void preLoad() {
-        isLoaded = false;
+        loaded = false;
 
         fileManager = new FileManager();
         configManager = new ConfigManager();
@@ -60,13 +65,20 @@ public class CheatTriggers {
         scriptManager.setup();
         scriptManager.entryPass();
 
-        isLoaded = true;
+        loaded = true;
     }
 
     public static void unload() {
-        fileManager = null;
+        commandManager.clearCommands();
+        scriptManager.clean();
 
-        isLoaded = false;
+        fileManager = null;
+        configManager = null;
+        commandManager = null;
+        scriptManager = null;
+
+        loaded = false;
+        System.gc();
     }
 
     public static void reload() {

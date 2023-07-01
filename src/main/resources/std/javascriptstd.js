@@ -1,3 +1,5 @@
+// some things stolen from chattriggers
+
 (function(global) {
     const Class = Java.type("java.lang.Class");
 

@@ -2,13 +2,12 @@ package cum.jesus.cheattriggers.scripting;
 
 import cum.jesus.cheattriggers.command.Command;
 import cum.jesus.cheattriggers.command.CommandException;
-import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ScriptableObject;
 
 public class ScriptCommand extends Command {
-    private Context context;
-    private Scriptable scope;
+    private Function runFunction;
+    private Script containingScript;
 
     public ScriptCommand(String name, String... aliases) {
         super(name, aliases);
@@ -16,22 +15,14 @@ public class ScriptCommand extends Command {
 
     @Override
     public void run(String alias, String[] args) throws CommandException {
-        ScriptableObject.callMethod(scope, "run", new Object[] {alias, args});
+        ScriptLoader.callFunction(runFunction, alias, args);
     }
 
-    public Context getContext() {
-        return context;
+    public void setRunFunction(Function runFunction) {
+        this.runFunction = runFunction;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    public Scriptable getScope() {
-        return scope;
-    }
-
-    public void setScope(Scriptable scope) {
-        this.scope = scope;
+    public void setContainingScript(Script containingScript) {
+        this.containingScript = containingScript;
     }
 }
