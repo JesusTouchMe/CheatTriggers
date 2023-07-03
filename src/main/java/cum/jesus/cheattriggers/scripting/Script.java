@@ -30,6 +30,10 @@ public class Script {
         return file;
     }
 
+    /**
+     * Adds a custom command to this script
+     * @param commandMeta The object containing the command info and run function.<br>Accepted fields are: "name" (string), "description" (string), "aliases" (js array), "run" (js function)
+     */
     public void addCommand(NativeObject commandMeta) {
         Function runFun = (Function) commandMeta.get("run");
         String cmdName = (String) commandMeta.get("name");
@@ -46,5 +50,13 @@ public class Script {
 
         commandList.add(cmd);
         CheatTriggers.getCommandManager().addCommand(cmd);
+    }
+
+    public void addModule(NativeObject moduleMeta) {
+
+    }
+
+    public void on(Object trigger, Object triggerFunction) {
+
     }
 }

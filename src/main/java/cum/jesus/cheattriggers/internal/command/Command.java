@@ -1,4 +1,4 @@
-package cum.jesus.cheattriggers.command;
+package cum.jesus.cheattriggers.internal.command;
 
 import cum.jesus.cheattriggers.CheatTriggers;
 import net.minecraft.client.Minecraft;

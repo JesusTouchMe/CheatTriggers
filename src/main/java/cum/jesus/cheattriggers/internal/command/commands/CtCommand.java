@@ -1,7 +1,7 @@
-package cum.jesus.cheattriggers.internal.commands;
+package cum.jesus.cheattriggers.internal.command.commands;
 
-import cum.jesus.cheattriggers.command.Command;
-import cum.jesus.cheattriggers.command.CommandException;
+import cum.jesus.cheattriggers.internal.command.Command;
+import cum.jesus.cheattriggers.internal.command.CommandException;
 import cum.jesus.cheattriggers.utils.ChatUtils;
 
 public class CtCommand extends Command {

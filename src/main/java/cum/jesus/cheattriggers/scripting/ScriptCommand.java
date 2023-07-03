@@ -1,9 +1,8 @@
 package cum.jesus.cheattriggers.scripting;
 
-import cum.jesus.cheattriggers.command.Command;
-import cum.jesus.cheattriggers.command.CommandException;
+import cum.jesus.cheattriggers.internal.command.Command;
+import cum.jesus.cheattriggers.internal.command.CommandException;
 import org.mozilla.javascript.Function;
-import org.mozilla.javascript.Scriptable;
 
 public class ScriptCommand extends Command {
     private Function runFunction;

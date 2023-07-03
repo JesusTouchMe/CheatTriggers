@@ -1,4 +1,4 @@
-package cum.jesus.cheattriggers.command;
+package cum.jesus.cheattriggers.internal.command;
 
 public class CommandException extends RuntimeException {
     public CommandException() {

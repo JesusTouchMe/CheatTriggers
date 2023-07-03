@@ -1,7 +1,6 @@
-package cum.jesus.cheattriggers.command;
+package cum.jesus.cheattriggers.internal.command;
 
 import cum.jesus.cheattriggers.utils.ChatUtils;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.List;

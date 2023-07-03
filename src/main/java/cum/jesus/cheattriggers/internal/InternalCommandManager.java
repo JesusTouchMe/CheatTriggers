@@ -1,7 +1,7 @@
 package cum.jesus.cheattriggers.internal;
 
 import cum.jesus.cheattriggers.CheatTriggers;
-import cum.jesus.cheattriggers.internal.commands.*;
+import cum.jesus.cheattriggers.internal.command.commands.*;
 
 /**
  * Command manager for the internal (aka mod) commands

@@ -27,6 +27,7 @@
     loadClass("org.lwjgl.opengl.Display");
 
     loadClass("cum.jesus.cheattriggers.CheatTriggers");
+    loadClass("cum.jesus.cheattriggers.internal.command.CommandException");
 
     loadClass("net.minecraft.client.renderer.GlStateManager");
     loadClass("org.lwjgl.opengl.GL11");

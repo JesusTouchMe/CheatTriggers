@@ -1,15 +1,13 @@
 package cum.jesus.cheattriggers;
 
 import com.google.gson.Gson;
-import cum.jesus.cheattriggers.command.CommandManager;
+import cum.jesus.cheattriggers.internal.command.CommandManager;
 import cum.jesus.cheattriggers.internal.ConfigManager;
 import cum.jesus.cheattriggers.internal.FileManager;
 import cum.jesus.cheattriggers.internal.InternalCommandManager;
 import cum.jesus.cheattriggers.scripting.ScriptManager;
 import cum.jesus.cheattriggers.utils.Logger;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.Packet;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public final class CheatTriggers {
     public static final String MODID = "cheattriggers";
