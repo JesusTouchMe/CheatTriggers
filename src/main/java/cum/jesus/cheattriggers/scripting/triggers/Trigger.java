@@ -1,8 +1,9 @@
 package cum.jesus.cheattriggers.scripting.triggers;
 
 import cum.jesus.cheattriggers.scripting.ScriptLoader;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class Trigger {
+public abstract class Trigger implements Comparable<Trigger> {
     private Object method;
     private TriggerType triggerType;
 
@@ -15,19 +16,23 @@ public abstract class Trigger {
         register();
     }
 
-    public final void setPriority(Priority priority) {
+    public final Trigger setPriority(Priority priority) {
         this.priority = priority;
 
         unregister();
         register();
+
+        return this;
     }
 
-    public void register() {
+    public Trigger register() {
         ScriptLoader.addTrigger(this);
+        return this;
     }
 
-    public void unregister() {
+    public Trigger unregister() {
         ScriptLoader.removeTrigger(this);
+        return this;
     }
 
     protected void callMethod(Object[] args) {
@@ -42,6 +47,12 @@ public abstract class Trigger {
 
     public Priority getPriority() {
         return priority;
+    }
+
+    @Override
+    public int compareTo(@NotNull Trigger other) {
+        int ordCmp = priority.ordinal() - other.priority.ordinal();
+        return ordCmp == 0 ? hashCode() - other.hashCode() : ordCmp;
     }
 
     /**

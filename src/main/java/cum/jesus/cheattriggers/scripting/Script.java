@@ -1,6 +1,8 @@
 package cum.jesus.cheattriggers.scripting;
 
 import cum.jesus.cheattriggers.CheatTriggers;
+import cum.jesus.cheattriggers.scripting.triggers.Trigger;
+import cum.jesus.cheattriggers.scripting.triggers.TriggerRegistry;
 import cum.jesus.cheattriggers.utils.Logger;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
@@ -8,6 +10,7 @@ import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +59,11 @@ public class Script {
 
     }
 
-    public void on(Object trigger, Object triggerFunction) {
-
+    public Trigger on(Object trigger, Object triggerFunction) {
+        try {
+            return TriggerRegistry.register(trigger, triggerFunction);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

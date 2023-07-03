@@ -59,7 +59,12 @@ public class ScriptLoader {
     }
 
     public static void execTriggerType(TriggerType type, Object[] args) {
-        triggers.get(type).forEach(trigger -> trigger.trigger(args));
+        ConcurrentSkipListSet<Trigger> list = triggers.get(type);
+        if (list != null) {
+            for (Trigger trigger : list) {
+                trigger.trigger(args);
+            }
+        }
     }
 
     public static void instanceContexts() {
@@ -93,7 +98,7 @@ public class ScriptLoader {
 
     public static void clean() {
         try {
-            Context.exit();
+            if (Context.getCurrentContext() != null) Context.exit();
             scriptContext = null;
             evalContext = null;
             scope = null;

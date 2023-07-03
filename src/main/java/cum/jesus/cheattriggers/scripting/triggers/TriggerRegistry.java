@@ -11,8 +11,8 @@ public class TriggerRegistry {
     private static Map<String, Method> methodMap = new LinkedHashMap<>();
 
     public static Trigger register(Object triggerType, Object method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        if (triggerType instanceof Class) { // TODO: forge events
-
+        if (triggerType instanceof Class) {
+            return new ForgeTrigger(method, (Class<?>) triggerType);
         }
 
         assert triggerType instanceof String : "A String or a Class is required for register()";
@@ -31,5 +31,31 @@ public class TriggerRegistry {
         }
 
         return (Trigger) meth.invoke(null, method);
+    }
+
+    /**
+     * Register a trigger which runs every game tick
+     *
+     * Passes 1 argument:
+     * - Elapsed ticks
+     *
+     * @param method The method to call on event fire
+     * @return The trigger
+     */
+    public static RegularTrigger registerTick(Object method) {
+        return new RegularTrigger(method, TriggerType.TICK);
+    }
+
+    /**
+     * Register a trigger which runs every 20 game ticks (every second)
+     *
+     * Passes 1 argument:
+     * - Elapsed seconds
+     *
+     * @param method The method to call on event fire
+     * @return The trigger
+     */
+    public static RegularTrigger registerSecond(Object method) {
+        return new RegularTrigger(method, TriggerType.SECOND);
     }
 }

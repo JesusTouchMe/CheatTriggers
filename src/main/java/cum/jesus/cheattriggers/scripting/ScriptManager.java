@@ -1,6 +1,7 @@
 package cum.jesus.cheattriggers.scripting;
 
 import cum.jesus.cheattriggers.CheatTriggers;
+import cum.jesus.cheattriggers.scripting.triggers.TriggerType;
 import cum.jesus.cheattriggers.utils.Logger;
 
 import java.io.*;
@@ -74,5 +75,9 @@ public class ScriptManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void trigger(TriggerType type, Object[] args) {
+        ScriptLoader.execTriggerType(type, args);
     }
 }

@@ -5,9 +5,13 @@ import cum.jesus.cheattriggers.internal.command.CommandManager;
 import cum.jesus.cheattriggers.internal.ConfigManager;
 import cum.jesus.cheattriggers.internal.FileManager;
 import cum.jesus.cheattriggers.internal.InternalCommandManager;
+import cum.jesus.cheattriggers.runtime.listeners.ClientListener;
+import cum.jesus.cheattriggers.runtime.listeners.WorldListener;
 import cum.jesus.cheattriggers.scripting.ScriptManager;
+import cum.jesus.cheattriggers.scripting.triggers.ForgeTrigger;
 import cum.jesus.cheattriggers.utils.Logger;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 
 public final class CheatTriggers {
     public static final String MODID = "cheattriggers";
@@ -49,6 +53,10 @@ public final class CheatTriggers {
     public static void preLoad() {
         loaded = false;
 
+        MinecraftForge.EVENT_BUS.register(ClientListener.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(WorldListener.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(ForgeTrigger.eventListener);
+
         fileManager = new FileManager();
         configManager = new ConfigManager();
         commandManager = new CommandManager();
@@ -70,13 +78,9 @@ public final class CheatTriggers {
         commandManager.clearCommands();
         scriptManager.clean();
 
-        fileManager = null;
-        configManager = null;
-        commandManager = null;
-        scriptManager = null;
+        ForgeTrigger.unregisterTriggers();
 
         loaded = false;
-        System.gc();
     }
 
     public static void reload() {
