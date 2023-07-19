@@ -11,4 +11,8 @@ public final class ChatUtils {
     public static void sendPrefixMessage(Object message) {
         sendMessage("§8[§4CheatTriggers§8]§r " + message.toString());
    }
+
+   public static void sendMessageAsPlayer(Object message) {
+        CheatTriggers.mc.thePlayer.sendChatMessage(message.toString());
+   }
 }

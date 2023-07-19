@@ -3,6 +3,7 @@ package cum.jesus.cheattriggers.runtime.listeners;
 import cum.jesus.cheattriggers.CheatTriggers;
 import cum.jesus.cheattriggers.scripting.triggers.TriggerType;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -33,6 +34,15 @@ public final class ClientListener {
             ticksToCalculateSeconds = 0;
         } else {
             ticksToCalculateSeconds++;
+        }
+    }
+
+    @SubscribeEvent
+    public void onChatReceive(ClientChatReceivedEvent event) {
+        if (event.type == 0 || event.type == 1) { // chat
+            TriggerType.CHAT.triggerAll(new Object[] {event.message.getUnformattedText(), event});
+        } else if (event.type == 2) { // actionbar
+
         }
     }
 }

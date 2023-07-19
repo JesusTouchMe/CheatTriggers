@@ -30,11 +30,6 @@ public class ScriptManager {
         ScriptLoader.setup();
     }
 
-    public void clean() {
-        scripts.clear();
-        ScriptLoader.clean();
-    }
-
     public void entryPass() {
         ScriptLoader.indexSetup();
 
@@ -71,10 +66,23 @@ public class ScriptManager {
 
             if (metadata.index != null) metadata.index = metadata.index.replace('/', File.separatorChar).replace('\\', File.separatorChar);
 
-            return new Script(metadata, file);
+            Script script = new Script(metadata, file);
+            CheatTriggers.getFileManager().createScriptData(script);
+
+            return script;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Script> getScripts() {
+        return scripts;
+    }
+
+    public void teardown() {
+        scripts.clear();
+        ScriptLoader.clearTriggers();
+        ScriptLoader.clean();
     }
 
     public void trigger(TriggerType type, Object[] args) {

@@ -41,12 +41,14 @@ public class Script {
         Function runFun = (Function) commandMeta.get("run");
         String cmdName = (String) commandMeta.get("name");
         String cmdDescription = (String) commandMeta.get("description");
+        String cmdHelp = (String) commandMeta.get("help");
         NativeArray cmdAliases = (NativeArray) commandMeta.get("aliases");
 
         String[] aliases = (String[]) cmdAliases.stream().toArray(String[]::new);
 
         ScriptCommand cmd = new ScriptCommand(cmdName, aliases);
         if (cmdDescription != null) cmd.setDescription(cmdDescription);
+        if (cmdHelp != null) cmd.setHelp(cmdHelp);
 
         cmd.setRunFunction(runFun);
         cmd.setContainingScript(this);

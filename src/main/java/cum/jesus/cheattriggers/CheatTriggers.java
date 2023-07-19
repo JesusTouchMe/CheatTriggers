@@ -2,16 +2,15 @@ package cum.jesus.cheattriggers;
 
 import com.google.gson.Gson;
 import cum.jesus.cheattriggers.internal.command.CommandManager;
-import cum.jesus.cheattriggers.internal.ConfigManager;
+import cum.jesus.cheattriggers.internal.config.ConfigManager;
 import cum.jesus.cheattriggers.internal.FileManager;
 import cum.jesus.cheattriggers.internal.InternalCommandManager;
-import cum.jesus.cheattriggers.runtime.listeners.ClientListener;
-import cum.jesus.cheattriggers.runtime.listeners.WorldListener;
 import cum.jesus.cheattriggers.scripting.ScriptManager;
 import cum.jesus.cheattriggers.scripting.triggers.ForgeTrigger;
+import cum.jesus.cheattriggers.scripting.triggers.TriggerType;
 import cum.jesus.cheattriggers.utils.Logger;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.client.gui.GuiScreen;
 
 public final class CheatTriggers {
     public static final String MODID = "cheattriggers";
@@ -29,33 +28,29 @@ public final class CheatTriggers {
     private static ScriptManager scriptManager;
 
     //<editor-fold desc="Getters">
-    public static final boolean isLoaded() {
+    public static boolean isLoaded() {
         return loaded;
     }
 
-    public static final FileManager getFileManager() {
+    public static FileManager getFileManager() {
         return fileManager;
     }
 
-    public static final ConfigManager getConfigManager() {
+    public static ConfigManager getConfigManager() {
         return configManager;
     }
 
-    public static final CommandManager getCommandManager() {
+    public static CommandManager getCommandManager() {
         return commandManager;
     }
 
-    public static final ScriptManager getScriptManager() {
+    public static ScriptManager getScriptManager() {
         return scriptManager;
     }
     //</editor-fold>
 
     public static void preLoad() {
         loaded = false;
-
-        MinecraftForge.EVENT_BUS.register(ClientListener.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(WorldListener.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(ForgeTrigger.eventListener);
 
         fileManager = new FileManager();
         configManager = new ConfigManager();
@@ -72,11 +67,14 @@ public final class CheatTriggers {
         scriptManager.entryPass();
 
         loaded = true;
+        TriggerType.GAME_LOAD.triggerAll();
     }
 
     public static void unload() {
+        TriggerType.GAME_UNLOAD.triggerAll();
+
+        scriptManager.teardown();
         commandManager.clearCommands();
-        scriptManager.clean();
 
         ForgeTrigger.unregisterTriggers();
 
@@ -87,5 +85,9 @@ public final class CheatTriggers {
         unload();
         preLoad();
         load();
+    }
+
+    public static void displayGuiScreen(GuiScreen screen) {
+        ModMain.display = screen;
     }
 }

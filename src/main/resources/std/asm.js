@@ -1,4 +1,4 @@
-// stolen from chattriggers
+// stolen from chattriggers and modified by JesusTouchMe
 
 let global = this;
 
@@ -8,6 +8,13 @@ global.Java = {
 
 global.Logger = Java.type("cum.jesus.cheattriggers.utils.Logger");
 global.Thread = Java.type("java.lang.Thread");
+
+
+global.thread = function (fun) {
+    if (typeof fun != "function") return;
+
+    new Thread(fun).start();
+}
 
 global.print = function (toPrint) {
     if (toPrint === null) {

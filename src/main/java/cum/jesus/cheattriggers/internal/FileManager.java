@@ -1,9 +1,12 @@
 package cum.jesus.cheattriggers.internal;
 
 import cum.jesus.cheattriggers.CheatTriggers;
+import cum.jesus.cheattriggers.scripting.Script;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class FileManager {
     // directories
@@ -42,5 +45,23 @@ public class FileManager {
         File tmpFile = new File(tmpDir, name);
         tmpFile.deleteOnExit();
         return tmpFile.createNewFile();
+    }
+
+    public void createScriptData(Script script) {
+        File scriptData = new File(scriptDataDir, script.getMetadata().name.replace(" ", ""));
+        if (!scriptData.exists()) scriptData.mkdirs();
+    }
+
+    /**
+     * @param name The name of the resource (from "resources")
+     * @return The file
+     */
+    public File getResourceFile(String name) {
+        try {
+            return new File(Objects.requireNonNull(CheatTriggers.class.getClassLoader().getResource(name)).toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

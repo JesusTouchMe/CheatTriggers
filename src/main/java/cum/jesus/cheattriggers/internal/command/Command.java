@@ -12,11 +12,15 @@ public abstract class Command {
 
     private final String name;
     private String description;
+    private String help;
     private final String[] aliases;
 
     protected Command(String name, String... aliases) {
         this.name = name;
         this.aliases = aliases;
+
+        description = null;
+        help = null;
     }
 
     /**
@@ -41,8 +45,16 @@ public abstract class Command {
         return description;
     }
 
+    public String getHelp() {
+        return help;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setHelp(String help) {
+        this.help = help;
     }
 
     public String[] getAliases() {
